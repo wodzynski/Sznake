@@ -1,0 +1,11 @@
+h1 {
+  color: pink;
+  text-align: center;
+  margin: 30 auto;
+}
+
+#tv {
+  background-color: black;
+  width: 500px;
+  margin: auto auto;
+}
