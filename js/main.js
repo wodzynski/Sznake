@@ -3,7 +3,10 @@ var ctx = canvas.getContext("2d");
 
 var x = 80;
 var y = 80;
-var shift = 10;
+var leap = 10;
+var movementCycle;
+var shift = [0, 0];
+var speed = 400;
 
 $(document).ready(function() {
   init();
@@ -11,7 +14,7 @@ $(document).ready(function() {
 
 function init() {
   ctx.fillStyle = "#FFFFFF";
-  ctx.fillRect(x, y, shift, shift);
+  ctx.fillRect(x, y, leap, leap);
 }
 
 $(window).keypress(keyPressHandler);
@@ -21,37 +24,52 @@ function keyPressHandler(e) {
   var keyCode = e.which;
   console.log(e, keyCode, e.which);
   if (keyCode == 119) {
-    pressedW();
+    shift = [0, -10];
+    movement();
   }
   if (keyCode == 115) {
-    pressedS();
+    shift = [0, 10];
+    movement();
   }
   if (keyCode == 97) {
-    pressedA();
+    shift = [-10, 0];
+    movement();
   }
   if (keyCode == 100) {
-    pressedD();
+    shift = [10, 0];
+    movement();
   }
-  ctx.clearRect(0, 0, 500, 300);
-  init();
-  // if (keyCode == 119) {
-  //   console.log("You pressed W!");
-  //   //alert("You pressed W!");
-  // }
+  // ctx.clearRect(0, 0, 500, 300);
+  // init();
 }
 
-function pressedW() {
-  y = y - shift;
+function movement() {
+  clearInterval(movementCycle);
+  ctx.clearRect(x, y, leap, leap);
+  y = y + shift[1];
+  x = x + shift[0];
+  ctx.fillRect(x, y, leap, leap);
+  movementCycle = setInterval(function() {
+    ctx.clearRect(x, y, leap, leap);
+    y = y + shift[1];
+    x = x + shift[0];
+    ctx.fillRect(x, y, leap, leap);
+    console.log(x, y, shift);
+  }, speed);
 }
 
-function pressedS() {
-  y = y + shift;
-}
+// function pressedW() {
+//   shift = [0, -10];
+// }
 
-function pressedA() {
-  x = x - shift;
-}
+// function pressedS() {
+//   shift = [0, 10];
+// }
 
-function pressedD() {
-  x = x + shift;
-}
+// function pressedA() {
+//   shift = [-10, 0];
+// }
+
+// function pressedD() {
+//   shift = [+10, 0];
+// }
