@@ -45,17 +45,15 @@ function keyPressHandler(e) {
 
 function movement() {
   clearInterval(movementCycle);
+  move();
+  movementCycle = setInterval(move, speed);
+}
+
+function move() {
   ctx.clearRect(x, y, leap, leap);
   y = y + shift[1];
   x = x + shift[0];
   ctx.fillRect(x, y, leap, leap);
-  movementCycle = setInterval(function() {
-    ctx.clearRect(x, y, leap, leap);
-    y = y + shift[1];
-    x = x + shift[0];
-    ctx.fillRect(x, y, leap, leap);
-    console.log(x, y, shift);
-  }, speed);
 }
 
 // function pressedW() {
