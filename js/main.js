@@ -1,12 +1,13 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var leap = 10;
+var leap = 20;
 var movementCycle;
 var shift = [0, 0];
-var speed = 400;
+var speed = 100;
 var head = [80, 80];
-var snake = [head];
+var snake = [[head[0], head[1]]];
+// var snake = [head];
 
 $(document).ready(function() {
   init();
@@ -15,6 +16,7 @@ $(document).ready(function() {
 function init() {
   // drawing board and initialize start position of the sznake
   ctx.fillStyle = "#FFFFFF";
+  // ctx.fillRect(snake[0][0], snake[0][1], leap, leap);
   ctx.fillRect(head[0], head[1], leap, leap);
 }
 
@@ -28,7 +30,7 @@ function keyPressHandler(e) {
     // checking if movement occurs horizontally
     if (shift[1] == 0) {
       // if yes, movement modifier is set
-      shift = [0, -10];
+      shift = [0, -leap];
       // and movement is made so action appears immediately after key press
       movement();
     }
@@ -36,7 +38,7 @@ function keyPressHandler(e) {
   // S key pressed
   if (keyCode == 115) {
     if (shift[1] == 0) {
-      shift = [0, 10];
+      shift = [0, leap];
       movement();
     }
   }
@@ -44,14 +46,14 @@ function keyPressHandler(e) {
   if (keyCode == 97) {
     // checking if movement occurs vertically
     if (shift[0] == 0) {
-      shift = [-10, 0];
+      shift = [-leap, 0];
       movement();
     }
   }
   // D key pressed
   if (keyCode == 100) {
     if (shift[0] == 0) {
-      shift = [10, 0];
+      shift = [leap, 0];
       movement();
     }
   }
@@ -68,7 +70,6 @@ function keyPressHandler(e) {
 function movement() {
   // stopping previous movement
   clearInterval(movementCycle);
-  // snake.unshift();
   // moving snake once
   move();
   // starting forward movement cycle
@@ -77,11 +78,12 @@ function movement() {
 
 function move() {
   // clearing an existing square
-  ctx.clearRect(head[0], head[1], leap, leap);
+  ctx.clearRect(snake[0][0], snake[0][1], leap, leap);
+  snake.shift();
   // calculating position of a new square and drawing it
   head[0] = head[0] + shift[0];
   head[1] = head[1] + shift[1];
-  // snake.push(head);
+  snake.push([head[0], head[1]]);
   ctx.fillRect(head[0], head[1], leap, leap);
 }
 
