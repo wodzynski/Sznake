@@ -83,12 +83,27 @@ function move() {
   ctx.clearRect(snake[0][0], snake[0][1], leap, leap);
   snake.shift();
   // calculating position of a new square and drawing it
-  head[0] = head[0] + shift[0];
-  head[1] = head[1] + shift[1];
+  // if head goes beyond screen, drawing it on the other side, else normal movemenet appears
+  if (head[0] + shift[0] > 500) {
+    head[0] = 0;
+  } else if (head[0] + shift[0] < 0) {
+    head[0] = 480;
+  } else {
+    head[0] = head[0] + shift[0];
+  }
+  // head[1] = head[1] + shift[1];
+  if (head[1] + shift[1] > 280) {
+    head[1] = 0;
+  } else if (head[1] + shift[1] < 0) {
+    head[1] = 280;
+  } else {
+    head[1] = head[1] + shift[1];
+  }
   snake.push([head[0], head[1]]);
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(head[0], head[1], leap, leap);
   if (head[0] === trait[0] && head[1] === trait[1]) {
+    snake.unshift(0);
     traitGenerator();
   }
 }
