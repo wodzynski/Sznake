@@ -28,7 +28,7 @@ function keyPressHandler(e) {
   var keyCode = e.which;
   // console.log(e, keyCode, e.which);
   // W key pressed
-  if (keyCode == 119) {
+  if (keyCode === 119 || keyCode === 87) {
     // checking if movement occurs horizontally
     if (shift[1] == 0) {
       // if yes, movement modifier is set
@@ -38,14 +38,14 @@ function keyPressHandler(e) {
     }
   }
   // S key pressed
-  if (keyCode == 115) {
+  if (keyCode === 115 || keyCode === 83) {
     if (shift[1] == 0) {
       shift = [0, leap];
       movement();
     }
   }
   // A key pressed
-  if (keyCode == 97) {
+  if (keyCode === 97 || keyCode === 65) {
     // checking if movement occurs vertically
     if (shift[0] == 0) {
       shift = [-leap, 0];
@@ -53,14 +53,14 @@ function keyPressHandler(e) {
     }
   }
   // D key pressed
-  if (keyCode == 100) {
+  if (keyCode === 100 || keyCode === 68) {
     if (shift[0] == 0) {
       shift = [leap, 0];
       movement();
     }
   }
   // Q key pressed
-  if (keyCode == 113) {
+  if (keyCode == 113 || keyCode === 81) {
     // stopping movement cycle and clearing shift so movement can start in every dirrection
     clearInterval(movementCycle);
     shift = [0, 0];
