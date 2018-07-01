@@ -22,22 +22,34 @@ $(window).keypress(keyPressHandler);
 function keyPressHandler(e) {
   //use e.which
   var keyCode = e.which;
-  console.log(e, keyCode, e.which);
+  // console.log(e, keyCode, e.which);
   if (keyCode == 119) {
-    shift = [0, -10];
-    movement();
+    if (shift[1] == 0) {
+      shift = [0, -10];
+      movement();
+    }
   }
   if (keyCode == 115) {
-    shift = [0, 10];
-    movement();
+    if (shift[1] == 0) {
+      shift = [0, 10];
+      movement();
+    }
   }
   if (keyCode == 97) {
-    shift = [-10, 0];
-    movement();
+    if (shift[0] == 0) {
+      shift = [-10, 0];
+      movement();
+    }
   }
   if (keyCode == 100) {
-    shift = [10, 0];
-    movement();
+    if (shift[0] == 0) {
+      shift = [10, 0];
+      movement();
+    }
+  }
+  if (keyCode == 113) {
+    clearInterval(movementCycle);
+    shift = [0, 0];
   }
   // ctx.clearRect(0, 0, 500, 300);
   // init();
