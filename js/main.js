@@ -7,6 +7,7 @@ var shift = [0, 0];
 var speed = 100;
 var head = [80, 80];
 var snake = [[head[0], head[1]]];
+var trait = [];
 // var snake = [head];
 
 $(document).ready(function() {
@@ -18,6 +19,7 @@ function init() {
   ctx.fillStyle = "#FFFFFF";
   // ctx.fillRect(snake[0][0], snake[0][1], leap, leap);
   ctx.fillRect(head[0], head[1], leap, leap);
+  traitGenerator();
 }
 
 $(window).keypress(keyPressHandler);
@@ -84,11 +86,18 @@ function move() {
   head[0] = head[0] + shift[0];
   head[1] = head[1] + shift[1];
   snake.push([head[0], head[1]]);
+  ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(head[0], head[1], leap, leap);
+  if (head[0] === trait[0] && head[1] === trait[1]) {
+    traitGenerator();
+  }
 }
 
 function traitGenerator() {
-  return Math.floor(Math.random());
+  trait[0] = Math.floor(Math.random() * 25) * 20;
+  trait[1] = Math.floor(Math.random() * 15) * 20;
+  ctx.fillStyle = "#FF0000";
+  ctx.fillRect(trait[0], trait[1], leap, leap);
 }
 
 // function pressedW() {

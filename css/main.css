@@ -9,3 +9,7 @@ h1 {
   width: 500px;
   margin: auto auto;
 }
+
+canvas {
+  display: block;
+}
