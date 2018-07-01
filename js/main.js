@@ -1,12 +1,12 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var x = 80;
-var y = 80;
 var leap = 10;
 var movementCycle;
 var shift = [0, 0];
 var speed = 400;
+var head = [80, 80];
+var snake = [head];
 
 $(document).ready(function() {
   init();
@@ -15,7 +15,7 @@ $(document).ready(function() {
 function init() {
   // drawing board and initialize start position of the sznake
   ctx.fillStyle = "#FFFFFF";
-  ctx.fillRect(x, y, leap, leap);
+  ctx.fillRect(head[0], head[1], leap, leap);
 }
 
 $(window).keypress(keyPressHandler);
@@ -68,6 +68,7 @@ function keyPressHandler(e) {
 function movement() {
   // stopping previous movement
   clearInterval(movementCycle);
+  // snake.unshift();
   // moving snake once
   move();
   // starting forward movement cycle
@@ -76,11 +77,16 @@ function movement() {
 
 function move() {
   // clearing an existing square
-  ctx.clearRect(x, y, leap, leap);
+  ctx.clearRect(head[0], head[1], leap, leap);
   // calculating position of a new square and drawing it
-  y = y + shift[1];
-  x = x + shift[0];
-  ctx.fillRect(x, y, leap, leap);
+  head[0] = head[0] + shift[0];
+  head[1] = head[1] + shift[1];
+  // snake.push(head);
+  ctx.fillRect(head[0], head[1], leap, leap);
+}
+
+function traitGenerator() {
+  return Math.floor(Math.random());
 }
 
 // function pressedW() {
