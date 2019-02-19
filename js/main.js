@@ -7,7 +7,7 @@ let movementCycle;
 let shift = [0, 0];
 const speed = 100;
 const head = [80, 80];
-const snake = [[head[0], head[1]]];
+let snake = [[head[0], head[1]]];
 const trait = [];
 let isOver;
 
@@ -64,6 +64,8 @@ function keyPressHandler(e) {
     console.log(snake);
     clearInterval(movementCycle);
     shift = [0, 0];
+    snake = [[head[0], head[1]]];
+    isOver = false;
     ctx.clearRect(0, 0, 500, 300);
     init();
   }
@@ -114,9 +116,6 @@ function isSnakeBitten() {
     if (head[0] == snake[i][0] && head[1] == snake[i][1]) {
       clearInterval(movementCycle);
       isOver = true;
-      console.log("head:" + head);
-      console.log("segment:" + snake[i][0] + ", " + snake[i][1]);
-      console.log("snake:" + snake);
     }
   }
 }
