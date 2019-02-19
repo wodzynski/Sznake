@@ -1,30 +1,24 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
 
 // the base length is 20
-var leap = 20;
-var movementCycle;
-var shift = [0, 0];
-var speed = 100;
-var head = [80, 80];
-var snake = [[head[0], head[1]]];
-var trait = [];
-// var clearBoard = new Array(25);
-// var snake = [head];
+const leap = 20;
+let movementCycle;
+let shift = [0, 0];
+const speed = 100;
+const head = [80, 80];
+const snake = [[head[0], head[1]]];
+const trait = [];
+let isOver;
 
 document.addEventListener('DOMContentLoaded', () => init(), false);
-
-// fill clearBoard with undefined
-for (var i = 0; i < clearBoard.length; i++) {
-  clearBoard[i] = new Array(15);
-}
 
 function init() {
   // drawing board and initialize start position of the sznake
   ctx.fillStyle = "#FFFFFF";
   // ctx.fillRect(snake[0][0], snake[0][1], leap, leap);
   ctx.fillRect(head[0], head[1], leap, leap);
-  traitGenerator();
+  generateTrait();
 }
 
 document.addEventListener("keydown", keyPressHandler);
@@ -67,6 +61,7 @@ function keyPressHandler(e) {
   // Q key pressed
   if (keyPressed == 113 || keyPressed === 81) {
     // stopping movement cycle and clearing shift so movement can start in every dirrection
+    console.log(snake);
     clearInterval(movementCycle);
     shift = [0, 0];
     ctx.clearRect(0, 0, 500, 300);
@@ -79,6 +74,7 @@ function movement() {
   clearInterval(movementCycle);
   // moving snake once
   move();
+  if (isOver) return;
   // starting forward movement cycle
   movementCycle = setInterval(move, speed);
 }
@@ -96,7 +92,6 @@ function move() {
   } else {
     head[0] = head[0] + shift[0];
   }
-  // head[1] = head[1] + shift[1];
   if (head[1] + shift[1] > 280) {
     head[1] = 0;
   } else if (head[1] + shift[1] < 0) {
@@ -105,21 +100,32 @@ function move() {
     head[1] = head[1] + shift[1];
   }
   snake.push([head[0], head[1]]);
+  isSnakeBitten();
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(head[0], head[1], leap, leap);
   if (head[0] === trait[0] && head[1] === trait[1]) {
     snake.unshift(0);
-    traitGenerator();
+    generateTrait();
   }
 }
 
-// function trackingBoard() {
-//   head[0]
-// }
+function isSnakeBitten() {
+  for(let i = 0; i < (snake.length - 4); i++) {
+    if (head[0] == snake[i][0] && head[1] == snake[i][1]) {
+      clearInterval(movementCycle);
+      isOver = true;
+      console.log("head:" + head);
+      console.log("segment:" + snake[i][0] + ", " + snake[i][1]);
+      console.log("snake:" + snake);
+    }
+  }
+}
 
-function traitGenerator() {
+function generateTrait() {
   trait[0] = Math.floor(Math.random() * 25) * 20;
   trait[1] = Math.floor(Math.random() * 15) * 20;
+  // checking if generated on the snake body
+  snake.forEach((segment) => {if (trait[0] == segment[0] && trait[1] == segment[1]) generateTrait()});
   ctx.fillStyle = "#FF0000";
   ctx.fillRect(trait[0], trait[1], leap, leap);
 }
